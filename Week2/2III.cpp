@@ -11,14 +11,18 @@ int pairDiff(vector<int>& arr, int key){
     int cnt = 0;
     if(key==0){
         for(auto p : freq){
-            if(p.second>1) 
-                cnt++;
+            if(p.second>1){ 
+                int f = p.second;
+                cnt += (f*(f-1))/2;
+            }
         }
     }
     else {
         for(auto p : freq){
-            if(freq.find(p.first+key)!=freq.end())
-                cnt++;
+            int y = p.first;
+            int x = key + y;
+            if(freq.find(x)!=freq.end())
+                {cnt += p.second * freq[x];}
         }
     }
     return cnt;
