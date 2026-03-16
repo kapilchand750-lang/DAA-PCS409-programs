@@ -23,19 +23,19 @@ int partitionHoare(vector<int>& arr, int l, int r){
 int partitionLomuto(vector<int>&arr, int l, int r){
     int pivot = arr[r];
     int i = l-1;
-    for(int j = 0; j<r; j++){
+    for(int j = l; j<r; j++){
         if(arr[j]<pivot){
             i++;
             swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i+1], arr[end]);
+    swap(arr[i+1], arr[r]);
     return i+1;
 }
 
 void quickSort(vector<int>& arr, int l, int r){
     if(l<r){
-        int randomIndex = start + (rand()%(end-start+1));
+        int randomIndex = l + (rand()%(r-l+1));
         swap(arr[randomIndex], arr[r]);
         int pivot = partitionLomuto(arr, l, r);
         quickSort(arr, l, pivot-1);
