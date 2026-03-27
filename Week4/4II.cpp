@@ -3,7 +3,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int partition(vector<int>& arr, int l, int r){
+
+int partitionHoare(vector<int>& arr, int l, int r){
     int pivot = arr[l];
     int start = l+1;
     int end = r;
@@ -19,9 +20,24 @@ int partition(vector<int>& arr, int l, int r){
     return end;
 }
 
+int partitionLomuto(vector<int>&arr, int l, int r){
+    int pivot = arr[r];
+    int i = l-1;
+    for(int j = l; j<r; j++){
+        if(arr[j]<pivot){
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[r]);
+    return i+1;
+}
+
 void quickSort(vector<int>& arr, int l, int r){
     if(l<r){
-        int pivot = partition(arr, l, r);
+        int randomIndex = l + (rand()%(r-l+1));
+        swap(arr[randomIndex], arr[r]);
+        int pivot = partitionLomuto(arr, l, r);
         quickSort(arr, l, pivot-1);
         quickSort(arr, pivot+1, r);
     }
