@@ -10,7 +10,7 @@ int partition(vector<int>& arr,int left,int right)
 
     for(int j = left; j < right; j++)
     {
-        if(arr[j] <= pivot)
+        if(arr[j] > pivot)
         {
             swap(arr[i],arr[j]);
             i++;
@@ -28,10 +28,10 @@ int quickSelect(vector<int>& arr,int left,int right,int k)
     {
         int pos = partition(arr,left,right);
 
-        if(pos == k)
+        if(pos == k-1)
             return arr[pos];
 
-        if(pos > k)
+        if(pos > k-1)
             return quickSelect(arr,left,pos-1,k);
 
         return quickSelect(arr,pos+1,right,k);
