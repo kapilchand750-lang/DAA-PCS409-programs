@@ -1,4 +1,4 @@
-// Week5 - (Ques 2) : "2Sum"
+// Week5 - (Ques 2) : "2Sum" T[n] = O(n) 
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -11,6 +11,20 @@ pair<int, int> twoSum(vector<int>& arr, int target){
         if(map.find(y)!=map.end())
             return {map[y], i};
         map[arr[i]] = i;
+    }
+    return {-1, -1};
+}
+
+// Approach 2 using sorting T[n] = O(nlogn) 
+pair<int, int> twoSum(vector<int>&arr, int key){
+    int n = arr.size();
+    sort(arr.begin(), arr.end());
+    
+    for(int i = 0, j=n-1; i<j;){
+        int sum = arr[i] + arr[j];
+        if(sum==key) return {arr[i], arr[j]};
+        else if(sum>key) j--;
+        else i++;
     }
     return {-1, -1};
 }
