@@ -17,7 +17,7 @@ pair<int, int> twoSum(vector<int>& arr, int target){
 
 int main(){
     int t = 0;
-    cout<<"Enter the number of the triadls : ";
+    cout<<"Enter the number of the trials : ";
     cin>>t;
     while(t--){
         int n;
