@@ -82,3 +82,77 @@ int main(){
     
     cout << "\nTotal Maximum Cost (MST): " << cost << endl;
 }
+
+// Using Kruskal
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Edge{
+    int u, v, w;
+};
+
+bool cmp(const Edge &a, const Edge &b){
+    return a.w > b.w; // descending → MAX spanning tree
+}
+
+class DSU{
+public:
+    vector<int> parent, rank;
+    
+    DSU(int n){
+        parent.resize(n);
+        rank.resize(n, 0);
+        for(int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    int findParent(int x){
+        if(parent[x] != x)
+            parent[x] = findParent(parent[x]);
+        return parent[x];
+    }
+    
+    void unionByRank(int x, int y){
+        int px = findParent(x);
+        int py = findParent(y);
+        
+        if(px == py) return;
+        
+        if(rank[px] > rank[py]) parent[py] = px;
+        else if(rank[px] < rank[py]) parent[px] = py;
+        else{
+            parent[py] = px;
+            rank[px]++;
+        }
+    }
+};
+
+int main(){
+    int V, E;
+    cin >> V >> E;
+    
+    vector<Edge> edges;
+    
+    for(int i = 0; i < E; i++){
+        int u, v, w;
+        cin >> u >> v >> w;
+        edges.push_back({u, v, w});
+    }
+    
+    sort(edges.begin(), edges.end(), cmp); // ⭐ IMPORTANT
+    
+    int totalCost = 0;
+    DSU dsu(V);
+    
+    for(auto edge : edges){
+        int u = edge.u;
+        int v = edge.v;
+        int cost = edge.w;
+        
+        if(dsu.findParent(u) != dsu.findParent(v)){
+            dsu.unionByRank(u, v);
+            totalCost += cost;
+        }
+    }
+    
+    cout << "The Max spanning weight : " << totalCost << endl;
+}
